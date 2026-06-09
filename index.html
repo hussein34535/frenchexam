@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>امتحان قانون فرنسي</title>
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Segoe UI',Tahoma,sans-serif; background:#f0f2f5; padding:20px; max-width:700px; margin:auto; }
+h1 { text-align:center; color:#1a73e8; margin-bottom:5px; font-size:22px; }
+.subtitle { text-align:center; color:#666; margin-bottom:20px; font-size:14px; }
+.btn-row { display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; justify-content:center; }
+.btn { padding:10px 20px; border:none; border-radius:8px; cursor:pointer; font-size:14px; font-weight:600; transition:.2s; }
+.btn-primary { background:#1a73e8; color:#fff; }
+.btn-primary:hover { background:#1557b0; }
+.btn-success { background:#34a853; color:#fff; }
+.btn-danger { background:#ea4335; color:#fff; }
+.btn-warning { background:#fbbc04; color:#333; }
+.btn-outline { background:#fff; color:#1a73e8; border:2px solid #1a73e8; }
+.btn-outline:hover { background:#e8f0fe; }
+.card { background:#fff; border-radius:12px; padding:20px; margin-bottom:15px; box-shadow:0 1px 3px rgba(0,0,0,.1); }
+.q-num { color:#1a73e8; font-weight:700; font-size:13px; margin-bottom:8px; }
+.q-text { font-size:16px; line-height:1.6; margin-bottom:15px; }
+.opts { display:flex; flex-direction:column; gap:8px; }
+.opt { padding:12px 15px; border:2px solid #ddd; border-radius:8px; cursor:pointer; transition:.2s; font-size:14px; }
+.opt:hover { border-color:#1a73e8; background:#e8f0fe; }
+.opt.correct { border-color:#34a853; background:#ceead6; }
+.opt.wrong { border-color:#ea4335; background:#fce8e6; }
+.opt.disabled { pointer-events:none; opacity:.7; }
+.opt.selected { border-color:#1a73e8; background:#e8f0fe; }
+.result-box { text-align:center; padding:30px; }
+.result-box h2 { font-size:28px; margin-bottom:10px; }
+.result-box .grade { font-size:20px; color:#1a73e8; margin-bottom:5px; }
+.stats { display:flex; gap:20px; justify-content:center; margin:20px 0; flex-wrap:wrap; }
+.stat { text-align:center; }
+.stat-num { font-size:24px; font-weight:700; color:#1a73e8; }
+.stat-label { font-size:13px; color:#666; }
+hr { margin:20px 0; border:none; border-top:1px solid #eee; }
+.footer { text-align:center; color:#999; font-size:12px; margin-top:30px; }
+@media(max-width:500px){ body { padding:10px; } .btn { width:100%; } }
+</style>
+</head>
+<body>
+<h1>📘 امتحان قانون فرنسي</h1>
+<p class="subtitle" id="subtitle"></p>
+
+<div class="btn-row" id="topBtns"></div>
+<div id="main"></div>
+<div class="btn-row" id="bottomBtns"></div>
+<div class="footer">اضغط على الإجابة لاختيارها | يعمل بدون إنترنت</div>
+
+<script>
+const questions = [
+  {
+    "subj": "قانون فرنسي",
+    "q": "On peut définir le droit administratif comme l'ensemble des règles dérogatoires du droit privé.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le droit administratif est indépendant du droit privé.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "C'est le juge judiciaire qui a joué le rôle important dans la construction du droit administratif.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "En France comme en Egypte, l'exercice de la fonction administrative est dominé par le principe de légalité.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "L'administration est toute-puissante.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le principe de légalité ne s'applique pas à toutes les activités de l'administration.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Les règles de droit ont toutes la même force juridique.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La Constitution s'impose à tous les citoyens et à tous les organes de l'Etat.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "En droit français comme en droit égyptien, le terme de loi a essentiellement une signification formelle.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le règlement est supérieur à la loi qui venait la compléter.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Les principes généraux du droit présentent la caractéristique d'être inscrit dans aucun texte.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le droit administratif est un droit où les règles écrites sont nombreuses.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La jurisprudence apparaît ainsi comme une source importante, essentielle même, de la légalité.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Les circonstances exceptionnelles ne légitiment toutefois que les mesures nécessaires.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le contrôle du juge n'est pas l'élément essentiel de la théorie de circonstances exceptionnelles.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La théorie des actes de gouvernement a eu pour objet, de soustraire à raison de leur caractère politique, certains actes administratifs au contrôle du juge.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La compétence liée est la situation dans laquelle l'administration est tenue de se décider d'une certaine manière, sans avoir la possibilité d'exercer un choix.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le recours pour excès de pouvoir vise à annuler un acte administratif.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le recours est recevable contre les décisions d'organes du pouvoir judiciaire.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "L'incompétence constitue une illégalité radicale de l'acte administratif.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "L'acte unilatéral occupe en droit administratif une place beaucoup plus considérable qu'en droit privé.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Tous les actes juridiques pris par l'administration constituent des décisions unilatérales.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La délégation de compétence doit être prévue par un texte.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La délégation de signature obéit à un régime différent de celui de la délégation de compétence.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le principe de non rétroactivité comporte quelques exceptions car la rétroactivité peut être autorisée par la loi, sauf en matière pénale.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Les décisions qui n'ont pas conféré de droits peuvent être retirées à tout moment et sans conditions.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Tous les contrats de l'administration sont des contrats administratifs.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La concession de service public est généralement citée au premier rang des contrats de l'administration.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Un contrat conclu entre deux personnes privées ne peut pas être un contrat administratif.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Dans le contrat administratif, le cocontractant est placé sous le contrôle permanent de l'administration.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "L'administration ne peut pas infliger des sanctions directement au cocontractant défaillant.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La notion de service public occupe une place importante dans l'ensemble du droit administratif.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le but du service public est toujours l'intérêt général.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "L'intérêt général n'est pas une donnée immuable.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La police judiciaire est l'ensemble des interventions de l'administration qui tendent à imposer à la libre action des particuliers la discipline exigée par la vie en société.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La police administrative est préventive.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La police judiciaire est répressive.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Au début du XIXe siècle, le principe était celui de l'irresponsabilité de la puissance publique.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le fonctionnaire n'est jamais son propre maître.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le fonctionnaire peut quitter son emploi sans autorisation de ses chefs.",
+    "opts": [
+      "صح",
+      "خطأ"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le droit administratif:",
+    "opts": [
+      "القانون الإداري",
+      "القانون الخاص",
+      "القانون التجاري"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Droit privé:",
+    "opts": [
+      "قانون عام",
+      "قانون خاص",
+      "قانون مدني"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La juridiction administrative:",
+    "opts": [
+      "القضاء العادي",
+      "القضاء الإداري",
+      "القضاء العالي"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "L'administration:",
+    "opts": [
+      "الإدارة",
+      "الضرر",
+      "التعويض"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le juge administratif:",
+    "opts": [
+      "القاضي الإداري",
+      "القاضي العادي",
+      "المقاول"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Principe de légalité:",
+    "opts": [
+      "مبدأ العدالة",
+      "نظرية المسئولية",
+      "مبدأ المشروعية"
+    ],
+    "answer": 2
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La fonction administrative:",
+    "opts": [
+      "القانون الإداري",
+      "الوظيفة العامة",
+      "الوظيفة الإدارية"
+    ],
+    "answer": 2
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Les décisions réglementaires:",
+    "opts": [
+      "قرارات فردية",
+      "القرارات اللائحية",
+      "قرارات ضمنية"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Les décisions individuelles:",
+    "opts": [
+      "القرارات الفردية",
+      "المصلحة الخاصة",
+      "حرية الفرد"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Pouvoir de l'administration:",
+    "opts": [
+      "سلطة القضاء",
+      "سلطة الإدارة",
+      "سلطة البرلمان"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le recours pour excès de pouvoir:",
+    "opts": [
+      "دعوى التعويض",
+      "دعوى الإلغاء/تجاوز السلطة",
+      "دعوى التفسير"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La force juridique:",
+    "opts": [
+      "القوة القانونية",
+      "القوة القضائية",
+      "الحكم القضائي"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Les règles écrites:",
+    "opts": [
+      "القواعد المكتوبة",
+      "القواعد الشفهية",
+      "قواعد دستورية"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Les règles non écrites:",
+    "opts": [
+      "القواعد المكتوبة",
+      "القواعد غير المكتوبة",
+      "القرارات اللائحية"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Recours en annulation:",
+    "opts": [
+      "الطعن بالبطلان/دعوى الإلغاء",
+      "تجاوز السلطة",
+      "قرار إداري"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La décision administrative:",
+    "opts": [
+      "القرار التنظيمي",
+      "أعمال الإدارة",
+      "القرار الإداري"
+    ],
+    "answer": 2
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Règlement:",
+    "opts": [
+      "لائحة",
+      "قاعدة",
+      "قانون"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Les traités internationaux:",
+    "opts": [
+      "المعاهدات الدولية",
+      "العلاقات الدولية",
+      "التعاون الدولي"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Pouvoir réglementaire:",
+    "opts": [
+      "سلطة تنظيمية/لائحية",
+      "سلطة البرلمان",
+      "سلطة قضائية"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Actes de l'administration:",
+    "opts": [
+      "العقود الإدارية",
+      "القرارات الإدارية",
+      "أعمال الإدارة"
+    ],
+    "answer": 2
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Les principes généraux du droit:",
+    "opts": [
+      "المبادئ العامة للقانون",
+      "القوانين الدستورية",
+      "لوائح تنظيمية"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Non-rétroactivité:",
+    "opts": [
+      "اللاشرعية",
+      "اللامسئولية",
+      "عدم الرجعية"
+    ],
+    "answer": 2
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Principe d'égalité:",
+    "opts": [
+      "مبدأ المسئولية",
+      "مبدأ المساواة",
+      "مبدأ التسلسل"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "L'enrichissement sans cause:",
+    "opts": [
+      "إثراء بلا سبب",
+      "إثراء بلا دافع",
+      "تصويت على القوانين"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Les droits acquis:",
+    "opts": [
+      "الحقوق المكتسبة",
+      "الحقوق الإدارية",
+      "الحقوق في المرفق"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La jurisprudence:",
+    "opts": [
+      "القضاء/السوابق القضائية",
+      "التشريع",
+      "العرف"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le juge judiciaire:",
+    "opts": [
+      "القاضي الإداري",
+      "القاضي العادي",
+      "المشرع"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La législation:",
+    "opts": [
+      "التشريع",
+      "القضاء",
+      "الإدارة"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Les circonstances exceptionnelles:",
+    "opts": [
+      "المشروعية العادية",
+      "الظروف الاستثنائية",
+      "الظروف الطارئة"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La légalité ordinaire:",
+    "opts": [
+      "المشروعية العادية",
+      "اختصاص عادي",
+      "القواعد الموضوعية"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Les pouvoirs exceptionnels:",
+    "opts": [
+      "السلطات الاستثنائية",
+      "رقابة القاضي",
+      "أعمال السيادة"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Contrôle du juge:",
+    "opts": [
+      "رقابة القاضي",
+      "غير مقبول",
+      "إصدار القانون"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Les actes de gouvernement:",
+    "opts": [
+      "أعمال السيادة/الحكومة",
+      "العلاقات الدولية",
+      "أدوار الانعقاد"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Irrecevables:",
+    "opts": [
+      "غير مقبول",
+      "مشروع",
+      "باطل"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Promulgation de la loi:",
+    "opts": [
+      "سن القانون",
+      "إصدار القانون",
+      "تعديل القانون"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le pouvoir discrétionnaire:",
+    "opts": [
+      "السلطة التقديرية",
+      "اختصاص مقيد",
+      "شروط القبول"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Un supérieur hiérarchique:",
+    "opts": [
+      "الرئيس الأعلى",
+      "المرؤوسين",
+      "القاضي"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La compétence liée:",
+    "opts": [
+      "اختصاص مقيد",
+      "سلطات القاضي",
+      "أسباب الإبطال"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Les conditions de recevabilité:",
+    "opts": [
+      "أسباب الإبطال",
+      "شروط القبول",
+      "الأسس الموضوعية"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Rejeté d'office:",
+    "opts": [
+      "رفض تلقائيا",
+      "قبول الدعوى",
+      "قرار ينتج آثار"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Capacité d'ester en justice:",
+    "opts": [
+      "أهلية التقاضي",
+      "عدم اختصاص",
+      "مخالفة الشكل"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "L'incompétence:",
+    "opts": [
+      "مخالفة القانون",
+      "عدم اختصاص",
+      "إساءة استخدام السلطة"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La violation des formes:",
+    "opts": [
+      "مخالفة الشكل",
+      "عدم المشروعية",
+      "المصلحة العامة"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le détournement de pouvoir:",
+    "opts": [
+      "إساءة استخدام السلطة",
+      "مخالفة القانون",
+      "بأثر رجعي"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Illégalité:",
+    "opts": [
+      "المشروعية",
+      "عدم المشروعية",
+      "الملاءمة"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Actes juridiques:",
+    "opts": [
+      "عمليات مادية",
+      "أعمال إدارية",
+      "أعمال قانونية"
+    ],
+    "answer": 2
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Opérations matérielles:",
+    "opts": [
+      "أعمال قانونية",
+      "عمليات مادية",
+      "قرارات صريحة"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "L'acte unilatéral:",
+    "opts": [
+      "عمل من طرف واحد",
+      "عمل متعدد الأطراف",
+      "تفويض اختصاص"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "L'acte plurilatéral:",
+    "opts": [
+      "عمل من طرف واحد",
+      "عمل متعدد الأطراف",
+      "تفويض توقيع"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Les décisions implicites:",
+    "opts": [
+      "القرارات الصريحة",
+      "القرارات الضمنية",
+      "السلطة المفوضة"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Délégation de compétence:",
+    "opts": [
+      "تفويض الاختصاص",
+      "تفويض التوقيع",
+      "تفويض مجرد"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Délégation de signature:",
+    "opts": [
+      "تفويض الاختصاص",
+      "تفويض السلطة",
+      "تفويض التوقيع"
+    ],
+    "answer": 2
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le Journal Officiel:",
+    "opts": [
+      "نشرة رسمية",
+      "الجريدة الرسمية",
+      "إجراءات التنفيذ"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Non rétroactivité des décisions:",
+    "opts": [
+      "عدم رجعية القرارات",
+      "آثار رجعية",
+      "قاعدة توازي الأشكال"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "L'abrogation:",
+    "opts": [
+      "السحب",
+      "الإلغاء",
+      "الإبطال القضائي"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le retrait:",
+    "opts": [
+      "السحب",
+      "الإلغاء",
+      "التعديل"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La règle du parallélisme des formes:",
+    "opts": [
+      "قاعدة توازي الأشكال",
+      "مدة الطعن القضائي",
+      "قرارات مشروعة"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le contrat administratif:",
+    "opts": [
+      "العقد المدني",
+      "العقد الإداري",
+      "عقود القانون الخاص"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Principe du libéralisme économique:",
+    "opts": [
+      "مبدأ الحرية الاقتصادية",
+      "مبدأ المساواة",
+      "المصلحة العامة"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Prérogatives:",
+    "opts": [
+      "التزامات",
+      "امتيازات/سلطات",
+      "شروط مالية"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le marché de travaux publics:",
+    "opts": [
+      "عقد التوريد",
+      "عقد الأشغال العامة",
+      "عقد تقديم خدمة"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Marché de fourniture:",
+    "opts": [
+      "عقد القرض العام",
+      "عقد التوريد",
+      "امتياز المرافق العامة"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Concession de service public:",
+    "opts": [
+      "التزام/امتياز المرافق العامة",
+      "عقد التوريد",
+      "عقد الأشغال"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le critère organique:",
+    "opts": [
+      "المعيار العضوي",
+      "المعيار المادي",
+      "المعيار الشكلي"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le critère matériel:",
+    "opts": [
+      "المعيار العضوي",
+      "المعيار الموضوعي أو المادي",
+      "المشرع"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Clause exorbitante:",
+    "opts": [
+      "شرط مألوف",
+      "شرط استثنائي/غير مألوف",
+      "ثبات العقد"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "L'immutabilité du contrat:",
+    "opts": [
+      "ثبات العقد",
+      "فسخ العقد",
+      "تعويض"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Résilier le contrat:",
+    "opts": [
+      "تعديل العقد",
+      "يفسخ العقد",
+      "يبرم العقد"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "L'équilibre financier:",
+    "opts": [
+      "شروط العقد",
+      "عدم الأمان القانوني",
+      "التوازن المالي"
+    ],
+    "answer": 2
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Sanctions coercitives:",
+    "opts": [
+      "جزاءات مالية",
+      "جزاءات ضاغطة",
+      "غرامات"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le service public:",
+    "opts": [
+      "المرفق العام",
+      "الوظيفة العامة",
+      "السلطة العامة"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Continuité:",
+    "opts": [
+      "استمرارية",
+      "مساواة",
+      "تكيف"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La Police administrative:",
+    "opts": [
+      "الضبط القضائي",
+      "الضبط الإداري",
+      "السلطة التنفيذية"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "L'ordre public:",
+    "opts": [
+      "السكينة العامة",
+      "النظام العام",
+      "الأمن العام"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La tranquillité publique:",
+    "opts": [
+      "الصحة العامة",
+      "الأمن العام",
+      "السكينة العامة"
+    ],
+    "answer": 2
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La sécurité publique:",
+    "opts": [
+      "السكينة العامة",
+      "الأمن العام",
+      "النظام العام"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La salubrité publique:",
+    "opts": [
+      "الصحة العامة",
+      "الأمن العام",
+      "النظام العام"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La police judiciaire:",
+    "opts": [
+      "الضبط الإداري",
+      "الضبط القضائي",
+      "السلطة التشريعية"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Préventive:",
+    "opts": [
+      "قمعية",
+      "وقائية",
+      "علاجية"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Répressive:",
+    "opts": [
+      "وقائية",
+      "قمعية/زجرية",
+      "إدارية"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La police administrative générale:",
+    "opts": [
+      "الضبط الإداري العام",
+      "الضبط الإداري الخاص",
+      "الأمن العام"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Responsabilité de l'administration:",
+    "opts": [
+      "مسئولية الإدارة",
+      "منفعة عامة",
+      "تعويض مالي"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Compensation pécuniaire:",
+    "opts": [
+      "تعويض مادي/مالي",
+      "دعوى التعويض",
+      "ضرر جسدي"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Recours en indemnité:",
+    "opts": [
+      "دعوى الإلغاء",
+      "دعوى التعويض",
+      "النشاط الإداري"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "L'irresponsabilité:",
+    "opts": [
+      "المسئولية",
+      "عدم المسئولية",
+      "السيادة"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le préjudice:",
+    "opts": [
+      "الخطأ",
+      "الضرر",
+      "علاقة السببية"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Lien de causalité:",
+    "opts": [
+      "علاقة السببية",
+      "ضرر مباشر",
+      "ضرر مؤكد"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Préjudice matériel:",
+    "opts": [
+      "ضرر جسدي",
+      "ضرر معنوي",
+      "ضرر مادي"
+    ],
+    "answer": 2
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Préjudice corporel:",
+    "opts": [
+      "ضرر مادي",
+      "ضرر جسدي أو إصابة",
+      "ضرر معنوي"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Dommage moral:",
+    "opts": [
+      "ضرر جسدي",
+      "ضرر مادي",
+      "ضرر معنوي"
+    ],
+    "answer": 2
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Le fonctionnaire:",
+    "opts": [
+      "الوظيفة العامة",
+      "الموظف",
+      "القاضي"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "La fonction publique:",
+    "opts": [
+      "الوظيفة العامة",
+      "الإدارة العامة",
+      "المرفق العام"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Obligations générales:",
+    "opts": [
+      "حقوق عامة",
+      "التزامات عامة",
+      "امتيازات عامة"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "L'obéissance hiérarchique:",
+    "opts": [
+      "الطاعة الرئاسية (التدرج)",
+      "عمل قضائي",
+      "أنشطة خاصة"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Magistrat du siège:",
+    "opts": [
+      "قاضي المحكمة/الحكم",
+      "الموظف الفعلي",
+      "الإدارة"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Démission:",
+    "opts": [
+      "إقالة",
+      "استقالة",
+      "تعيين"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Pouvoir de nomination:",
+    "opts": [
+      "سلطة التعيين",
+      "سلطة التأديب",
+      "سلطة الرقابة"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Cumul d'emplois:",
+    "opts": [
+      "الإجازات",
+      "جمع الوظائف",
+      "الترقية"
+    ],
+    "answer": 1
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "L'impartialité:",
+    "opts": [
+      "الحيدة/النزاهة",
+      "التبعية",
+      "الطاعة"
+    ],
+    "answer": 0
+  },
+  {
+    "subj": "قانون فرنسي",
+    "q": "Activité lucrative:",
+    "opts": [
+      "نشاط خيري",
+      "نشاط مربح/مكسب",
+      "نشاط سياسي"
+    ],
+    "answer": 1
+  }
+];
+
+let idx = 0, score = 0, answered = 0, qState = [], mode = 'all';
+let shuffled = [];
+let examQs = [];
+
+function shuffle(a) { const b=[...a]; for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];} return b; }
+
+function typeLabel(q) { return q.opts.length===2 && q.opts[0]==='صح' ? '✅ صح/خطأ' : '❓ اختيار من متعدد'; }
+
+function getCounts() {
+  const all = questions.length;
+  const tf = questions.filter(q => q.opts.length===2 && q.opts[0]==='صح').length;
+  const mcq = all - tf;
+  return { all, tf, mcq };
+}
+
+function renderMenu() {
+  const c = getCounts();
+  document.getElementById('subtitle').textContent = `إجمالي ${c.all} سؤال (${c.tf} صح/خطأ + ${c.mcq} اختيار من متعدد)`;
+  document.getElementById('topBtns').innerHTML = `
+    <button class="btn btn-primary" onclick="start('all')">📚 الجميع (${c.all})</button>
+    <button class="btn btn-success" onclick="start('tf')">✅ صح/خطأ (${c.tf})</button>
+    <button class="btn btn-warning" onclick="start('mcq')">❓ اختيارات (${c.mcq})</button>
+  `;
+  document.getElementById('main').innerHTML = `<div class="card" style="text-align:center;padding:40px;color:#666;">اختر نوع الأسئلة من الأزرار أعلاه لبدء الامتحان</div>`;
+  document.getElementById('bottomBtns').innerHTML = '';
+}
+
+function start(type) {
+  mode = type;
+  if (type === 'tf') examQs = questions.filter(q => q.opts.length===2 && q.opts[0]==='صح');
+  else if (type === 'mcq') examQs = questions.filter(q => !(q.opts.length===2 && q.opts[0]==='صح'));
+  else examQs = [...questions];
+  shuffled = shuffle(examQs);
+  idx = 0; score = 0; answered = 0;
+  qState = shuffled.map(() => ({ selected: null, revealed: false }));
+  render();
+}
+
+function render() {
+  const total = shuffled.length;
+  document.getElementById('subtitle').textContent = `السؤال ${idx+1}/${total} | ${mode==='tf'?'✅ صح/خطأ':mode==='mcq'?'❓ اختيارات':'📚 الجميع'} | الإجابات: ${score}/${answered}`;
+
+  const q = shuffled[idx];
+  const state = qState[idx];
+  
+  let optsHtml = q.opts.map((o, i) => {
+    let cls = 'opt';
+    if (state.revealed) { cls += ' disabled'; if (i === q.answer) cls += ' correct'; if (i === state.selected && i !== q.answer) cls += ' wrong'; }
+    else if (state.selected === i) cls += ' selected';
+    return `<div class="${cls}" onclick="selectOpt(${i})">${o}</div>`;
+  }).join('');
+
+  document.getElementById('main').innerHTML = `
+    <div class="card">
+      <div class="q-num">${typeLabel(q)}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="opts">${optsHtml}</div>
+    </div>
+  `;
+
+  const prevBtn = `<button class="btn btn-outline" onclick="go(${idx-1})" ${idx===0?'disabled':''}>◀ السابق</button>`;
+  const nextBtn = `<button class="btn btn-outline" onclick="go(${idx+1})" ${idx>=total-1?'disabled':''}>التالي ▶</button>`;
+  const revealBtn = state.revealed ? '' : `<button class="btn btn-primary" onclick="reveal()">🔍 إظهار الإجابة</button>`;
+
+  document.getElementById('bottomBtns').innerHTML = `
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+      ${prevBtn}${revealBtn}${nextBtn}
+    </div>
+    <div style="text-align:center;margin-top:10px;">
+      <button class="btn btn-danger" onclick="renderMenu()">🏠 القائمة الرئيسية</button>
+      ${answered === total ? `<button class="btn btn-success" onclick="showResult()">📊 النتيجة النهائية</button>` : ''}
+    </div>
+  `;
+}
+
+function selectOpt(i) {
+  const state = qState[idx];
+  if (state.revealed) return;
+  if (state.selected === null) answered++;
+  if (state.selected === null) {
+    if (i === shuffled[idx].answer) score++;
+  } else {
+    if (state.selected === shuffled[idx].answer) score--;
+    if (i === shuffled[idx].answer) score++;
+  }
+  state.selected = i;
+  state.revealed = true;
+  render();
+}
+
+function reveal() {
+  const state = qState[idx];
+  if (state.revealed) return;
+  if (state.selected === null) {
+    answered++;
+  } else {
+    if (state.selected === shuffled[idx].answer) { /* already correct */ }
+  }
+  state.revealed = true;
+  render();
+}
+
+function go(n) { if (n>=0 && n<shuffled.length) { idx=n; render(); } }
+
+function showResult() {
+  const total = shuffled.length;
+  const pct = Math.round((score/total)*100);
+  let grade = pct>=90?'ممتاز':pct>=80?'جيد جداً':pct>=70?'جيد':pct>=60?'مقبول':'راسب';
+
+  const wrong = shuffled.filter((q,i) => qState[i].selected !== q.answer);
+  let wrongHtml = '';
+  if (wrong.length > 0) {
+    wrongHtml = wrong.slice(0,10).map((q,i) => `
+      <div style="margin-bottom:10px;padding:10px;background:#fce8e6;border-radius:8px;font-size:13px;">
+        <strong>${i+1}.</strong> ${q.q.substring(0,80)}<br>
+        <span style="color:#34a853;">✅ الصح: ${q.opts[q.answer]}</span>
+      </div>
+    `).join('');
+    if (wrong.length > 10) wrongHtml += `<div style="color:#666;">...و ${wrong.length-10} أخطاء أخرى</div>`;
+  }
+
+  document.getElementById('main').innerHTML = `
+    <div class="card result-box">
+      <h2>📊 النتيجة</h2>
+      <div class="grade">${grade}</div>
+      <div style="font-size:16px;margin:5px 0;">${score}/${total}</div>
+      <div style="font-size:24px;font-weight:700;color:#1a73e8;">${pct}%</div>
+      ${wrong.length > 0 ? `<hr><div style="text-align:right;"><h3 style="font-size:14px;color:#ea4335;margin-bottom:10px;">الأخطاء (${wrong.length})</h3>${wrongHtml}</div>` : '<hr><div style="color:#34a853;font-size:18px;">🎉 كل الإجابات صحيحة!</div>'}
+    </div>
+  `;
+  document.getElementById('bottomBtns').innerHTML = `
+    <button class="btn btn-primary" onclick="start('${mode}')">🔄 إعادة الامتحان</button>
+    <button class="btn btn-danger" onclick="renderMenu()">🏠 القائمة الرئيسية</button>
+  `;
+}
+
+renderMenu();
+</script>
+</body>
+</html>
+
